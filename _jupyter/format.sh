@@ -8,13 +8,14 @@ nb=$1
 
 
 function ipynb(){
-	jupyter nbconvert --to markdown $nb
-	py format.py "-p" ${nb%.ipynb}.md
+	py format.py "-p" $nb
+
 	mv ${nb%.ipynb}.md ../_posts/
-    if [[ -d ${nb%.ipynb}_files ]]
+    if compgen -G "*.png" > /dev/null
     then
         echo "==========Moving image files=========="
-        mv ${nb%.ipynb}_files ../assets/img/
+        mkdir ../assets/img/${nb%.ipynb}_files
+        mv *.png ../assets/img/${nb%.ipynb}_files
     fi
 }
 
